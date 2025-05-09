@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation'; // Import notFound
+import Image from 'next/image'; // Import next/image
 
 // Re-use the TarotCard interface (consider moving to a shared types file later)
 interface TarotCard {
@@ -101,13 +102,20 @@ export default async function CardDetailPage({ params: paramsPromise }: CardDeta
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-purple-800 mb-4">{card.name}</h1>
         <div className="flex flex-col md:flex-row gap-6">
-          <div className="md:w-1/3 flex justify-center">
-            {/* Placeholder for image */}
-            <div className="w-48 h-72 bg-gray-200 rounded flex items-center justify-center text-gray-500 border">
+          <div className="md:w-1/3 flex justify-center items-start"> {/* items-start to align image to top if smaller */}
+            <div className="w-48 h-80 relative bg-gray-200 rounded border overflow-hidden"> {/* Adjusted height for typical card aspect ratio */}
                {card.imageUrl ? (
-                 <img src={card.imageUrl} alt={card.name} className="max-h-full max-w-full object-contain" />
+                 <Image 
+                    src={card.imageUrl} 
+                    alt={card.name} 
+                    width={200} // Placeholder width, adjust if known
+                    height={350} // Placeholder height, adjust if known
+                    className="object-contain w-full h-full"
+                  />
                ) : (
-                 <span>(No Image)</span>
+                 <div className="w-full h-full flex items-center justify-center text-gray-500">
+                    <span>(No Image)</span>
+                 </div>
                )}
             </div>
           </div>

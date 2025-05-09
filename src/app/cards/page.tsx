@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Import next/image
 
 // Define the expected structure of a card object from the API
 interface TarotCard {
@@ -100,15 +101,20 @@ export default async function CardsPage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {cards.map((card) => (
             <Link key={card._id} href={`/cards/${card._id}`} className="border rounded-lg p-2 hover:shadow-lg transition-shadow bg-white flex flex-col items-center text-center">
-              {/* Placeholder for image - replace with actual image later */}
-              <div className="w-full h-32 bg-gray-200 mb-2 rounded flex items-center justify-center text-gray-500">
+              <div className="w-full h-48 relative mb-2 rounded overflow-hidden bg-gray-200 flex items-center justify-center"> {/* Increased height for better aspect ratio */}
                 {card.imageUrl ? (
-                   <img src={card.imageUrl} alt={card.name} className="max-h-full max-w-full object-contain" />
+                   <Image 
+                     src={card.imageUrl} 
+                     alt={card.name} 
+                     width={200} // Placeholder width
+                     height={350} // Placeholder height
+                     className="object-contain w-full h-full" 
+                   />
                  ) : (
-                   <span>(No Image)</span>
+                   <span className="text-gray-500">(No Image)</span>
                  )}
               </div>
-              <h2 className="text-sm font-semibold text-purple-700">{card.name}</h2>
+              <h2 className="text-sm font-semibold text-purple-700 mt-1">{card.name}</h2>
               <p className="text-xs text-gray-500">{card.arcana}</p>
               {card.suit && <p className="text-xs text-gray-500">{card.suit}</p>}
             </Link>
