@@ -176,7 +176,8 @@ interface AllCardsApiResponse {
 // Generate static paths for all cards
 export async function generateStaticParams() {
   console.log('[generateStaticParams] Fetching all card IDs for static generation...');
-  const res = await fetch('http://localhost:5005/api/cards', { cache: 'no-store' }); // Use no-store for build to get latest
+  // Removed { cache: 'no-store' }
+  const res = await fetch('http://localhost:5005/api/cards'); 
   if (!res.ok) {
     console.error('[generateStaticParams] Failed to fetch all cards for static generation.');
     return [];

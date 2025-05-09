@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import * as matter from 'gray-matter'; // Changed import style
+import matter from 'gray-matter'; // Reverted to default import
 import { remark } from 'remark';
 import html from 'remark-html';
 
@@ -15,7 +15,8 @@ export interface PostData {
   author?: string;
   tags?: string[];
   contentHtml: string;
-  [key: string]: any; // Allow other frontmatter fields
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // Allow other frontmatter fields, disable ESLint for this line
 }
 
 export function getSortedPostsData(): PostData[] {
@@ -30,7 +31,7 @@ export function getSortedPostsData(): PostData[] {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter.default(fileContents); // Call .default
+    const matterResult = matter(fileContents); // Reverted to direct call
 
     // Combine the data with the slug
     return {
@@ -67,7 +68,7 @@ export async function getPostData(slug: string): Promise<PostData | null> {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter.default(fileContents); // Call .default
+    const matterResult = matter(fileContents); // Reverted to direct call
 
     // Use remark to convert markdown into HTML string
     const processedContent = await remark()

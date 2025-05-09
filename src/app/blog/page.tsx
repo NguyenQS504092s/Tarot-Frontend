@@ -1,26 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-
-// TODO: Define interface for Blog Post Summary
-interface BlogPostSummary {
-  slug: string;
-  title: string;
-  excerpt?: string;
-  date?: string;
-  // Add other fields like author, tags, featuredImage if needed
-}
-
-// TODO: Implement fetching blog post summaries (e.g., from a CMS or local markdown files)
-async function getBlogPosts(): Promise<BlogPostSummary[]> {
-  // Placeholder data for now
-  return [
-    { slug: 'bai-viet-mau-1', title: 'Bài Viết Mẫu Số 1', excerpt: 'Đây là tóm tắt cho bài viết mẫu số 1...', date: '2025-05-09' },
-    { slug: 'bai-viet-mau-2', title: 'Bài Viết Mẫu Số 2', excerpt: 'Đây là tóm tắt cho bài viết mẫu số 2...', date: '2025-05-08' },
-  ];
-}
+import { getSortedPostsData, PostData } from '@/lib/posts'; // Import PostData type
 
 export default async function BlogIndexPage() {
-  const posts = await getBlogPosts();
+  const posts: PostData[] = getSortedPostsData(); // Use the utility function
 
   return (
     <div className="container mx-auto px-4 py-8">

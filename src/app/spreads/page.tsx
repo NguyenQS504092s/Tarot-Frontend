@@ -27,7 +27,8 @@ async function getSpreads(): Promise<Spread[]> {
     const apiUrl = 'http://localhost:5005/api/spreads'; // Assuming this is the endpoint
     console.log(`[getSpreads] Attempting to fetch from: ${apiUrl}`);
 
-    const res = await fetch(apiUrl, { cache: 'no-store' });
+    // Removed { cache: 'no-store' } to allow static generation or default caching
+    const res = await fetch(apiUrl); 
     console.log(`[getSpreads] Fetch response status: ${res.status}`);
 
     if (!res.ok) {

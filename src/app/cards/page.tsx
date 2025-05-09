@@ -40,9 +40,8 @@ async function getCards(): Promise<TarotCard[]> {
 
     let res;
     try {
-      res = await fetch(apiUrl, {
-        cache: 'no-store',
-      });
+      // Removed { cache: 'no-store' } to allow static generation or default caching
+      res = await fetch(apiUrl); 
       console.log(`[getCards] Fetch response status: ${res.status}`);
     } catch (fetchError) {
       console.error('[getCards] Fetch call itself failed:', fetchError);
