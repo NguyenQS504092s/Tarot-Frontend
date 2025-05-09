@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google"; // Change font import
-import Header from "@/components/layout/Header"; // Import Header
-import Footer from "@/components/layout/Footer"; // Import Footer
+import Header from "@/components/layout/Header"; 
+import Footer from "@/components/layout/Footer"; 
+import { AuthProvider } from '@/context/AuthContext'; // Import AuthProvider
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] }); // Change font variable
+const inter = Inter({ subsets: ["latin"] }); 
 
 export const metadata: Metadata = {
   title: "Tarot World - Khám phá thế giới Tarot", // Updated title
@@ -17,12 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi"> {/* Set language to Vietnamese */}
-      {/* Remove potential extra whitespace/newlines causing hydration mismatch */}
+    <html lang="vi">
       <body className={`${inter.className} flex flex-col min-h-screen bg-gray-100`}>
-        <Header />
-        <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

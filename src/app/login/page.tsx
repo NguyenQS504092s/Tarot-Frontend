@@ -1,28 +1,39 @@
-'use client'; // Mark as a Client Component because it uses hooks (useState)
+'use client'; 
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Added useContext
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext'; // Import useAuth
+// import { useRouter } from 'next/navigation'; // For redirect later
 
 export default function LoginPage() {
+  const { login: contextLogin, isLoading: authIsLoading } = useAuth(); // Get login function and loading state from context
+  // const router = useRouter(); // For redirect later
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  // We'll use authIsLoading from context for the button's disabled state, 
+  // but can keep a local loading for immediate UI feedback if desired, or just rely on authIsLoading.
+  // For simplicity, let's use a local loading state for the form submission process itself.
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
-
-    // TODO: Implement actual API call to backend /api/users/login
-    console.log('Login attempt with:', { email, password });
-    // Simulate API call delay and potential error
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // Example error handling:
-    // setError('Email hoặc mật khẩu không chính xác.');
-
-    setLoading(false);
-    // TODO: Handle successful login (e.g., save token, redirect)
+    setFormSubmitting(true);
+    try {
+      await contextLogin(email, password);
+      // If contextLogin is successful, it will set token and user in context
+      // and also save token to localStorage.
+      console.log('[LoginPage] Login successful via AuthContext');
+      // TODO: Redirect after successful login
+      // router.push('/'); // Example: redirect to homepage
+    } catch (err: any) {
+      console.error('[LoginPage] Login failed via AuthContext:', err);
+      setError(err.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (
@@ -72,10 +83,10 @@ export default function LoginPage() {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              disabled={loading}
-              className={`bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={formSubmitting || authIsLoading} // Disable if form is submitting or auth context is loading
+              className={`bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${ (formSubmitting || authIsLoading) ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {loading ? 'Đang xử lý...' : 'Đăng Nhập'}
+              {(formSubmitting || authIsLoading) ? 'Đang xử lý...' : 'Đăng Nhập'}
             </button>
             <Link href="/register" className="inline-block align-baseline font-bold text-sm text-purple-600 hover:text-purple-800">
               Chưa có tài khoản? Đăng ký

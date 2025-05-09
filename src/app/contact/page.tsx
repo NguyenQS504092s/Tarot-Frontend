@@ -9,14 +9,13 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center">Liên Hệ Với Chúng Tôi</h1>
+      <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center">Kết Nối Với Tarot World</h1>
       <div className="max-w-xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md">
         <p className="text-gray-700 mb-6">
-          Chúng tôi rất vui khi được lắng nghe từ bạn! Nếu bạn có bất kỳ câu hỏi, phản hồi, hoặc đề xuất nào,
-          xin vui lòng sử dụng biểu mẫu dưới đây hoặc gửi email trực tiếp cho chúng tôi.
+          Tại Tarot World, chúng tôi cam kết mang đến một không gian trực tuyến đáng tin cậy và trải nghiệm người dùng tốt nhất. Nếu bạn có bất kỳ câu hỏi, góp ý về nội dung, đề xuất cải thiện tính năng, hoặc muốn tìm hiểu thêm về các dịch vụ của chúng tôi, đừng ngần ngại liên hệ. Chúng tôi luôn sẵn lòng lắng nghe và hỗ trợ bạn.
         </p>
         
-        {/* TODO: Implement a functional contact form later */}
+        {/* TODO: Implement a functional contact form later. For now, it's a visual placeholder. */}
         <form action="#" method="POST" className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Họ và tên</label>
