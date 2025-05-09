@@ -30,7 +30,7 @@ export function getSortedPostsData(): PostData[] {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+    const matterResult = matter.default(fileContents); // Call .default
 
     // Combine the data with the slug
     return {
@@ -67,7 +67,7 @@ export async function getPostData(slug: string): Promise<PostData | null> {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+    const matterResult = matter.default(fileContents); // Call .default
 
     // Use remark to convert markdown into HTML string
     const processedContent = await remark()
